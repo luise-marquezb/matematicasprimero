@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guía de Matemáticas · 1° Secundaria</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F5F0E8;
+    --ink: #1A1410;
+    --paper: #FFFDF7;
+    --rule: #D4C9B0;
+    --c1: #D64C2B;   /* rojo ladrillo */
+    --c2: #2B7A4B;   /* verde bosque */
+    --c3: #1D5FAD;   /* azul profundo */
+    --c4: #8B3DAF;   /* violeta */
+    --c5: #C47B1A;   /* ámbar */
+    --accent: #D64C2B;
+    --shadow: rgba(26,20,16,0.12);
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    padding: 0 0 80px;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--ink);
+    color: #fff;
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content:'';
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent, transparent 18px,
+      rgba(255,255,255,.04) 18px, rgba(255,255,255,.04) 19px
+    );
+  }
+  .header-inner { position:relative; max-width:860px; margin:0 auto; }
+  .badge {
+    display:inline-block;
+    background: var(--c1);
+    color:#fff;
+    font-family:'Syne',sans-serif;
+    font-size:.72rem;
+    font-weight:700;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    padding:4px 12px;
+    border-radius:2px;
+    margin-bottom:16px;
+  }
+  header h1 {
+    font-family:'Syne',sans-serif;
+    font-size: clamp(2rem,5vw,3.2rem);
+    font-weight:800;
+    line-height:1.05;
+    letter-spacing:-.02em;
+  }
+  header h1 span { color: var(--c1); }
+  header p {
+    margin-top:12px;
+    font-size:1rem;
+    color:rgba(255,255,255,.65);
+    font-weight:600;
+    letter-spacing:.02em;
+  }
+  .toc {
+    display:flex; flex-wrap:wrap; gap:8px;
+    margin-top:28px;
+  }
+  .toc a {
+    text-decoration:none;
+    font-family:'Syne',sans-serif;
+    font-size:.78rem;
+    font-weight:600;
+    color:#fff;
+    border:1px solid rgba(255,255,255,.22);
+    padding:6px 14px;
+    border-radius:2px;
+    transition: background .18s, border-color .18s;
+  }
+  .toc a:hover { background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.5); }
+
+  /* ── MAIN ── */
+  main { max-width:860px; margin:0 auto; padding:48px 24px 0; }
+
+  /* ── SECTION ── */
+  .section {
+    margin-bottom:56px;
+    animation: fadeUp .5s ease both;
+  }
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+
+  .section-header {
+    display:flex; align-items:center; gap:16px;
+    margin-bottom:24px;
+    padding-bottom:14px;
+    border-bottom: 2px solid var(--rule);
+  }
+  .sec-num {
+    font-family:'DM Mono',monospace;
+    font-size:.75rem;
+    font-weight:500;
+    color:#fff;
+    background: var(--sec-color, var(--c1));
+    width:36px; height:36px;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex-shrink:0;
+    letter-spacing:.04em;
+  }
+  .section-header h2 {
+    font-family:'Syne',sans-serif;
+    font-size:1.35rem;
+    font-weight:700;
+    letter-spacing:-.01em;
+  }
+
+  /* ── CONCEPT BOX ── */
+  .concept {
+    background: var(--paper);
+    border-left: 4px solid var(--sec-color, var(--c1));
+    padding: 18px 22px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 24px;
+    box-shadow: 3px 3px 0 var(--shadow);
+  }
+  .concept-label {
+    font-family:'Syne',sans-serif;
+    font-size:.7rem;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color: var(--sec-color, var(--c1));
+    margin-bottom:6px;
+  }
+  .concept p { font-size:.97rem; line-height:1.7; }
+  .concept .formula {
+    font-family:'DM Mono',monospace;
+    font-size:.95rem;
+    background: rgba(0,0,0,.05);
+    display:inline-block;
+    padding:3px 10px;
+    border-radius:4px;
+    margin-top:6px;
+  }
+
+  /* ── EXERCISE CARD ── */
+  .ex-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:620px){ .ex-grid { grid-template-columns:1fr; } }
+
+  .ex-card {
+    background: var(--paper);
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow: 3px 4px 0 var(--shadow), 0 0 0 1px var(--rule);
+    transition: transform .18s, box-shadow .18s;
+  }
+  .ex-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 5px 8px 0 var(--shadow), 0 0 0 1px var(--rule);
+  }
+
+  .ex-top {
+    padding: 14px 18px 12px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .ex-num {
+    font-family:'DM Mono',monospace;
+    font-size:.72rem;
+    font-weight:500;
+    color:#fff;
+    background: var(--sec-color, var(--c1));
+    padding:2px 8px;
+    border-radius:3px;
+  }
+  .ex-level {
+    font-size:.7rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+  }
+  .level-basic  { color: var(--c2); }
+  .level-inter  { color: var(--c3); }
+
+  .ex-body { padding: 0 18px 18px; }
+  .ex-body p { font-size:.95rem; line-height:1.65; }
+  .ex-body .hint {
+    margin-top:10px;
+    font-size:.83rem;
+    color:#666;
+    font-style:italic;
+    padding-left:10px;
+    border-left:2px solid var(--rule);
+  }
+
+  /* ── ANSWER TOGGLE ── */
+  details { margin-top:12px; }
+  summary {
+    cursor:pointer;
+    list-style:none;
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:'Syne',sans-serif;
+    font-size:.78rem;
+    font-weight:700;
+    color: var(--sec-color, var(--c1));
+    padding:5px 12px;
+    border:1.5px solid currentColor;
+    border-radius:4px;
+    user-select:none;
+    transition: background .15s;
+  }
+  summary:hover { background: rgba(0,0,0,.05); }
+  summary::before { content:'▶'; font-size:.65rem; transition:transform .2s; }
+  details[open] summary::before { transform:rotate(90deg); }
+
+  .answer {
+    margin-top:10px;
+    padding:12px 15px;
+    background: rgba(0,0,0,.04);
+    border-radius:6px;
+    font-size:.9rem;
+    line-height:1.7;
+  }
+  .answer strong { font-family:'DM Mono',monospace; }
+  .answer .steps { margin-top:6px; padding-left:16px; }
+  .answer .steps li { margin-bottom:4px; }
+
+  /* ── WIDE CARD (1 col) ── */
+  .ex-grid.single { grid-template-columns:1fr; }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align:center;
+    padding:32px 20px 0;
+    font-size:.8rem;
+    color:#999;
+    font-family:'Syne',sans-serif;
+    letter-spacing:.04em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="badge">Guía Práctica · Matemáticas</div>
+    <h1>Números &amp; <span>Patrones</span></h1>
+    <p>1° de Secundaria &nbsp;·&nbsp; 12 ejercicios resueltos</p>
+    <nav class="toc">
+      <a href="#s1">Progresiones Aritméticas</a>
+      <a href="#s2">Primos y Compuestos</a>
+      <a href="#s3">MCM</a>
+      <a href="#s4">MCD</a>
+      <a href="#s5">Divisibilidad</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ══════════════════════════════════
+     1. PROGRESIONES ARITMÉTICAS
+════════════════════════════════════ -->
+<section class="section" id="s1" style="--sec-color:var(--c1); animation-delay:.05s">
+  <div class="section-header">
+    <div class="sec-num">01</div>
+    <h2>Progresiones Aritméticas</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">Concepto clave</div>
+    <p>Una <strong>progresión aritmética</strong> es una sucesión de números donde la diferencia entre dos términos consecutivos siempre es igual. A esa diferencia se le llama <strong>razón (r)</strong>.</p>
+    <div class="formula">aₙ = a₁ + (n − 1) · r</div>
+  </div>
+
+  <div class="ex-grid">
+    <!-- EJ 1 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 1</span>
+        <span class="ex-level level-basic">Básico</span>
+      </div>
+      <div class="ex-body">
+        <p>Completa la progresión y encuentra la razón:<br>
+        <strong>3, 7, 11, ___, ___, ___</strong></p>
+        <p class="hint">💡 Observa cuánto aumenta de un término al siguiente.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <strong>r = 7 − 3 = 4</strong>
+            <ul class="steps">
+              <li>11 + 4 = <strong>15</strong></li>
+              <li>15 + 4 = <strong>19</strong></li>
+              <li>19 + 4 = <strong>23</strong></li>
+            </ul>
+            Serie completa: 3, 7, 11, 15, 19, 23
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- EJ 2 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 2</span>
+        <span class="ex-level level-inter">Intermedio</span>
+      </div>
+      <div class="ex-body">
+        <p>En la progresión 5, 9, 13, 17, … ¿cuál es el <strong>décimo término</strong>?</p>
+        <p class="hint">💡 Usa la fórmula aₙ = a₁ + (n − 1) · r con n = 10.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <strong>Datos:</strong> a₁ = 5, r = 4, n = 10
+            <ul class="steps">
+              <li>a₁₀ = 5 + (10 − 1) · 4</li>
+              <li>a₁₀ = 5 + 9 · 4 = 5 + 36</li>
+              <li><strong>a₁₀ = 41</strong></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     2. NÚMEROS PRIMOS Y COMPUESTOS
+════════════════════════════════════ -->
+<section class="section" id="s2" style="--sec-color:var(--c2); animation-delay:.1s">
+  <div class="section-header">
+    <div class="sec-num">02</div>
+    <h2>Números Primos y Compuestos</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">Concepto clave</div>
+    <p>Un número es <strong>primo</strong> si solo es divisible entre 1 y él mismo (ej.: 7, 13, 29). Es <strong>compuesto</strong> si tiene más divisores (ej.: 12 = 2 × 2 × 3). El número 1 no es primo ni compuesto.</p>
+  </div>
+
+  <div class="ex-grid">
+    <!-- EJ 3 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 3</span>
+        <span class="ex-level level-basic">Básico</span>
+      </div>
+      <div class="ex-body">
+        <p>¿Cuáles de los siguientes números son primos?<br>
+        <strong>11, 15, 17, 21, 23, 25</strong></p>
+        <p class="hint">💡 Verifica si tienen divisores distintos de 1 y sí mismos.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <ul class="steps">
+              <li>11 → solo divide entre 1 y 11 ✅ <strong>primo</strong></li>
+              <li>15 = 3 × 5 ❌ compuesto</li>
+              <li>17 → solo divide entre 1 y 17 ✅ <strong>primo</strong></li>
+              <li>21 = 3 × 7 ❌ compuesto</li>
+              <li>23 → solo divide entre 1 y 23 ✅ <strong>primo</strong></li>
+              <li>25 = 5 × 5 ❌ compuesto</li>
+            </ul>
+            <strong>Primos: 11, 17, 23</strong>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- EJ 4 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 4</span>
+        <span class="ex-level level-basic">Básico</span>
+      </div>
+      <div class="ex-body">
+        <p>Descompón en factores primos:<br>
+        <strong>a) 36 &nbsp;&nbsp; b) 60</strong></p>
+        <p class="hint">💡 Divide sucesivamente entre 2, 3, 5, 7… hasta obtener 1.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <strong>a) 36</strong>
+            <ul class="steps">
+              <li>36 ÷ 2 = 18 → 18 ÷ 2 = 9 → 9 ÷ 3 = 3 → 3 ÷ 3 = 1</li>
+              <li>36 = 2² × 3²</li>
+            </ul>
+            <strong>b) 60</strong>
+            <ul class="steps">
+              <li>60 ÷ 2 = 30 → 30 ÷ 2 = 15 → 15 ÷ 3 = 5 → 5 ÷ 5 = 1</li>
+              <li>60 = 2² × 3 × 5</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- EJ 5 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 5</span>
+        <span class="ex-level level-inter">Intermedio</span>
+      </div>
+      <div class="ex-body">
+        <p>¿Existe algún número primo <strong>par mayor que 2</strong>? Justifica tu respuesta.</p>
+        <p class="hint">💡 Piensa en los divisores de cualquier número par.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <strong>No existe.</strong>
+            <ul class="steps">
+              <li>Todo número par es divisible entre 2.</li>
+              <li>Si fuera mayor que 2, tendría al menos 3 divisores: 1, 2 y el número mismo.</li>
+              <li>Eso lo haría compuesto por definición.</li>
+            </ul>
+            El 2 es el <strong>único número primo par</strong>.
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- EJ 6 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 6</span>
+        <span class="ex-level level-inter">Intermedio</span>
+      </div>
+      <div class="ex-body">
+        <p>Usando la criba de Eratóstenes, lista todos los primos <strong>entre 1 y 30</strong>.</p>
+        <p class="hint">💡 Tacha los múltiplos de 2, luego de 3, luego de 5…</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <strong>Pasos:</strong>
+            <ul class="steps">
+              <li>Tacha múltiplos de 2: 4,6,8,10,12,14,16,18,20,22,24,26,28,30</li>
+              <li>Tacha múltiplos de 3 (no tachados): 9,15,21,27</li>
+              <li>Tacha múltiplos de 5: 25</li>
+            </ul>
+            <strong>Primos: 2, 3, 5, 7, 11, 13, 17, 19, 23, 29</strong>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     3. MÍNIMO COMÚN MÚLTIPLO
+════════════════════════════════════ -->
+<section class="section" id="s3" style="--sec-color:var(--c3); animation-delay:.15s">
+  <div class="section-header">
+    <div class="sec-num">03</div>
+    <h2>Mínimo Común Múltiplo (MCM)</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">Concepto clave</div>
+    <p>El <strong>MCM</strong> de dos o más números es el menor número positivo que es múltiplo de todos ellos. Se obtiene descomponiendo en factores primos y tomando cada factor con su <em>mayor</em> exponente.</p>
+  </div>
+
+  <div class="ex-grid">
+    <!-- EJ 7 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 7</span>
+        <span class="ex-level level-basic">Básico</span>
+      </div>
+      <div class="ex-body">
+        <p>Calcula el MCM de <strong>12 y 18</strong> usando descomposición en factores primos.</p>
+        <p class="hint">💡 Descompón ambos y toma el exponente mayor de cada primo.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <ul class="steps">
+              <li>12 = 2² × 3</li>
+              <li>18 = 2 × 3²</li>
+              <li>MCM = 2² × 3² = 4 × 9</li>
+            </ul>
+            <strong>MCM(12, 18) = 36</strong>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- EJ 8 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 8</span>
+        <span class="ex-level level-inter">Intermedio</span>
+      </div>
+      <div class="ex-body">
+        <p>Tres autobuses parten juntos a las 8:00 a.m. El primero vuelve cada <strong>12 min</strong>, el segundo cada <strong>15 min</strong> y el tercero cada <strong>20 min</strong>. ¿A qué hora se vuelven a reunir?</p>
+        <p class="hint">💡 El MCM de 12, 15 y 20 te da el tiempo de espera en minutos.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <ul class="steps">
+              <li>12 = 2² × 3</li>
+              <li>15 = 3 × 5</li>
+              <li>20 = 2² × 5</li>
+              <li>MCM = 2² × 3 × 5 = <strong>60 min</strong></li>
+            </ul>
+            Se reúnen a las <strong>9:00 a.m.</strong>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     4. MÁXIMO COMÚN DIVISOR
+════════════════════════════════════ -->
+<section class="section" id="s4" style="--sec-color:var(--c4); animation-delay:.2s">
+  <div class="section-header">
+    <div class="sec-num">04</div>
+    <h2>Máximo Común Divisor (MCD)</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">Concepto clave</div>
+    <p>El <strong>MCD</strong> es el mayor número que divide exactamente a todos los números dados. Se obtiene descomponiendo en factores primos y tomando cada factor común con su <em>menor</em> exponente.</p>
+  </div>
+
+  <div class="ex-grid">
+    <!-- EJ 9 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 9</span>
+        <span class="ex-level level-basic">Básico</span>
+      </div>
+      <div class="ex-body">
+        <p>Calcula el MCD de <strong>24 y 36</strong>.</p>
+        <p class="hint">💡 Descompón ambos y toma solo los factores comunes con el menor exponente.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <ul class="steps">
+              <li>24 = 2³ × 3</li>
+              <li>36 = 2² × 3²</li>
+              <li>Factores comunes: 2 (menor exp: 2²) y 3 (menor exp: 3¹)</li>
+              <li>MCD = 2² × 3 = 4 × 3</li>
+            </ul>
+            <strong>MCD(24, 36) = 12</strong>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- EJ 10 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 10</span>
+        <span class="ex-level level-inter">Intermedio</span>
+      </div>
+      <div class="ex-body">
+        <p>Una maestra tiene <strong>48 lápices</strong> y <strong>60 cuadernos</strong> para repartir en grupos iguales sin que sobre nada. ¿Cuántos grupos puede formar como máximo y cuántos útiles recibirá cada grupo?</p>
+        <p class="hint">💡 El número máximo de grupos es el MCD(48, 60).</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <ul class="steps">
+              <li>48 = 2⁴ × 3</li>
+              <li>60 = 2² × 3 × 5</li>
+              <li>MCD = 2² × 3 = <strong>12 grupos</strong></li>
+              <li>Lápices por grupo: 48 ÷ 12 = <strong>4</strong></li>
+              <li>Cuadernos por grupo: 60 ÷ 12 = <strong>5</strong></li>
+            </ul>
+            Puede formar <strong>12 grupos</strong>, cada uno recibe 4 lápices y 5 cuadernos.
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════
+     5. CRITERIOS DE DIVISIBILIDAD
+════════════════════════════════════ -->
+<section class="section" id="s5" style="--sec-color:var(--c5); animation-delay:.25s">
+  <div class="section-header">
+    <div class="sec-num">05</div>
+    <h2>Criterios de Divisibilidad</h2>
+  </div>
+
+  <div class="concept">
+    <div class="concept-label">Criterios rápidos</div>
+    <p>
+      <strong>÷2:</strong> termina en cifra par &nbsp;|&nbsp;
+      <strong>÷3:</strong> suma de dígitos divisible entre 3 &nbsp;|&nbsp;
+      <strong>÷4:</strong> las dos últimas cifras divisibles entre 4 &nbsp;|&nbsp;
+      <strong>÷5:</strong> termina en 0 o 5 &nbsp;|&nbsp;
+      <strong>÷6:</strong> divisible entre 2 y 3 &nbsp;|&nbsp;
+      <strong>÷9:</strong> suma de dígitos divisible entre 9 &nbsp;|&nbsp;
+      <strong>÷10:</strong> termina en 0
+    </p>
+  </div>
+
+  <div class="ex-grid">
+    <!-- EJ 11 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 11</span>
+        <span class="ex-level level-basic">Básico</span>
+      </div>
+      <div class="ex-body">
+        <p>¿El número <strong>5 832</strong> es divisible entre 2, 3, 4, 5, 6 y 9? Analiza cada caso.</p>
+        <p class="hint">💡 Aplica cada criterio sin necesidad de dividir.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            Suma de dígitos: 5+8+3+2 = <strong>18</strong>
+            <ul class="steps">
+              <li>÷2: termina en 2 (par) ✅</li>
+              <li>÷3: 18 ÷ 3 = 6 ✅</li>
+              <li>÷4: últimas cifras "32" → 32 ÷ 4 = 8 ✅</li>
+              <li>÷5: termina en 2, no en 0 o 5 ❌</li>
+              <li>÷6: divisible entre 2 y 3 ✅</li>
+              <li>÷9: 18 ÷ 9 = 2 ✅</li>
+            </ul>
+            <strong>5 832 es divisible entre: 2, 3, 4, 6 y 9.</strong>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <!-- EJ 12 -->
+    <div class="ex-card">
+      <div class="ex-top">
+        <span class="ex-num">Ej. 12</span>
+        <span class="ex-level level-inter">Intermedio</span>
+      </div>
+      <div class="ex-body">
+        <p>Encuentra el dígito <strong>"a"</strong> para que <strong>7a4</strong> sea divisible entre 9.</p>
+        <p class="hint">💡 La suma de todos los dígitos debe ser divisible entre 9.</p>
+        <details>
+          <summary>Ver solución</summary>
+          <div class="answer">
+            <ul class="steps">
+              <li>Suma de dígitos: 7 + a + 4 = 11 + a</li>
+              <li>Para que sea divisible entre 9: 11 + a = 18</li>
+              <li>a = 18 − 11 = <strong>7</strong></li>
+            </ul>
+            El número es <strong>774</strong>. Verificación: 7+7+4 = 18 ÷ 9 = 2 ✅
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p>Guía elaborada para 1° de Secundaria &nbsp;·&nbsp; Haz clic en <em>"Ver solución"</em> para comprobar tus respuestas</p>
+</footer>
+
+</body>
+</html>
